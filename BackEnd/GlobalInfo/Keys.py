@@ -1,3 +1,7 @@
-#Conexión a MongoDB database
+import sys
+
 dbconn = None
-mongoUrl = "mongodb://127.0.0.1:27017"
+
+#Conexión a MongoDB database
+strConnection = "mongodb://localhost:27017"
+strDBConnection = "ChisUta"
