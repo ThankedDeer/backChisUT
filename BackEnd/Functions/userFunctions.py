@@ -2,7 +2,7 @@ from flask import jsonify, request
 from pymongo import MongoClient
 from bson import ObjectId
 from flask_cors import CORS
-import BackEnd.GlobalInfo.keys as PracticaKeys
+import BackEnd.GlobalInfo.Keys as PracticaKeys
 import BackEnd.GlobalInfo.ResponseMessages as ResponseMessages
 
 
@@ -29,9 +29,32 @@ def login():
             return jsonify({'message': 'Inicio de sesión exitoso'})
         else:
             # Usuario no encontrado, devolver un mensaje de error o código de estado apropiado
-            return jsonify({'message': 'Credenciales inválidas'}), 401
+            return jsonify({'message': 'Credenciales inválidas'}, ResponseMessages.message401)
 
     except Exception as e:
         print("Error en la autenticación:", e)
-        return jsonify(ResponseMessage.err500)
+        return jsonify(ResponseMessages.message500)
+    
+def postUsuario():
+    try:
+        data = request.get_json()
+        usuario = data.get('strUsuario')
+        password = data.get('strPassword')
+        
+        nuevo_Usuario ={
+            'strUsuario':usuario,
+            'strPassword':password
+        }
+        
+        resultado = dbConnUsers.insert_one(nuevo_Usuario)
+        
+        if resultado.inserted_id:
+            nuevo_Usuario['_id'] = str(resultado.inserted_id)
+            return jsonify(nuevo_Usuario, ResponseMessages.message200)
+        else:
+            return jsonify(ResponseMessages.message500)
+        
+    except Exception as e:
+        print('Error al agregar chisme', e)
+        return jsonify(ResponseMessages.message500)
     
