@@ -9,8 +9,10 @@ if PracticaKeys.dbconn == None:
     mongoConnect = MongoClient(PracticaKeys.strConnection)
     PracticaKeys.dbconn = mongoConnect[PracticaKeys.strDBConnection]
     
-# Definir dbConnPost fuera de cualquier función
+    # Definir dbConnPost fuera de cualquier función
 dbConnPost = PracticaKeys.dbconn["clChisme"]
+    
+
 
 def getChisme():
     try:
