@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+import os
 import BackEnd.Functions.userFunctions as callMethodUser
 import BackEnd.Functions.postFunctions as callMethodPost
 import BackEnd.GlobalInfo.ResponseMessages as ResponseMessage
@@ -48,6 +49,8 @@ def fnPostUser():
         return jsonify(ResponseMessage.message500)
     
 
+
 if __name__ == '__main__':
-    app.run( host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
+
     
